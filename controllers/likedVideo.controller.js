@@ -28,7 +28,7 @@ const findUserLikedVideo = async (req, res, next, userId) => {
     next();
   } catch (error) {
     console.log(error)
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to retrive user's liked videos",
       errorMessage: error.message,
@@ -49,7 +49,7 @@ const getUserLikedVideo = async (req, res) => {
     res.status(200).json({ success: true, likedVideoItems });
   } catch (err) {
     console.log(err)
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to retrive the likedVideo",
       errMessage: err.message,

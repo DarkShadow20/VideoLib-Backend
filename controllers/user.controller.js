@@ -6,15 +6,15 @@ const findUser=async(req,res)=>{
   if(userExists){
     let user=await User.findOne({ email , password })
     if(user){
-      res.json({success:true,user:{_id:user._id,name:user.name}});
+      return res.json({success:true,user:{_id:user._id,name:user.name}});
     }else{
-      res.status(401).json({
+      return res.status(401).json({
         success:false,
         message:"Username and password does not match"
       })
     }
   }else{
-    res.status(401).json({
+    return res.status(401).json({
       success:false,
       message:"Username does not exist"
     })
@@ -35,9 +35,10 @@ const addUser=async(req,res)=>{
     let newUser=new User(userData);
     await newUser.save();
     const user={_id:newUser._id,name:newUser.name}
-    res.status(201).json({success:true,user})
+    return res.status(201).json({success:true,user})
   }catch(err){
-    res.status(500).json({
+    console.log(err)
+    return res.status(500).json({
       success:false,
       message:"Could not add the user.Try Again!",
       errMessage:err.message

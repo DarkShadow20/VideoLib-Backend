@@ -3,9 +3,9 @@ const {Video}=require("../models/video-model");
 const getVideos=async(req,res)=>{
   try{
     const videos = await Video.find({});
-    res.status(200).json({success:true,videos})
+    return res.status(200).json({success:true,videos})
   }catch(err){
-    res.status(500).json({
+    return res.status(500).json({
       success:false,
       message:"Unable to get videos",
       errMessage:err.message
@@ -23,7 +23,7 @@ const findVideo=async(req,res,next,vid)=>{
     next();
   }catch(err){
     console.log(err)
-    res.status(400).json({
+    return res.status(400).json({
       success:false,
       message:"Unable to retrieve the video"
     })

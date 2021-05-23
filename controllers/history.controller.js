@@ -27,7 +27,7 @@ const findUserHistory = async (req, res, next, userId) => {
     next();
   } catch (error) {
     console.log(err)
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to retrive user's watch history",
       errorMessage: error.message,
@@ -48,7 +48,7 @@ const getUserHistory = async (req, res) => {
     res.json({ success: true, historyItems });
   } catch (err) {
     console.log(err)
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to retrive the history",
       errMessage: err.message,

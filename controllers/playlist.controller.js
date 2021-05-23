@@ -30,7 +30,7 @@ const findUserPlaylist = async (req, res, next, userId) => {
     next();
   } catch (error) {
     console.log(error)
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to retrive user's playlists",
       errorMessage: error.message,
@@ -54,10 +54,10 @@ const getUserPlaylist = async (req, res) => {
   try {
     let { playlist } = req;
     const playlistItems = await getActivePlaylistItems(playlist);
-    res.status(200).json({ success: true, playlist: playlistItems });
+    return res.status(200).json({ success: true, playlist: playlistItems });
   } catch (err) {
     console.log(err)
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Unable to retrive the playlist",
       errMessage: err.message,
@@ -76,7 +76,7 @@ const createPlaylist = async (req, res) => {
   playlist.playlists = concat(playlist.playlists,newList );
   let updatedPlaylist = await playlist.save();
   newList = updatedPlaylist.playlists[updatedPlaylist.playlists.length-1];
-  res.status(201).json({ success: true, playlist: newList });
+  return res.status(201).json({ success: true, playlist: newList });
 };
 
 const updatePlaylistName = async (req, res) => {
@@ -90,7 +90,7 @@ const updatePlaylistName = async (req, res) => {
   }
   let updatedPlaylist = await playlist.save();
   updatedPlaylist = await getActivePlaylistItems(updatedPlaylist);
-  res.status(200).json({ success: true, playlist: updatedPlaylist });
+  return res.status(200).json({ success: true, playlist: updatedPlaylist });
 };
 
 const getVideosInPlaylist =  (playlist, listId) => {
@@ -140,7 +140,7 @@ const updatePlaylistVideo = async (req, res) => {
   let updatedPlaylist = await playlist.save();
   playlistVideos = getVideosInPlaylist(updatedPlaylist, playlistId);
   playlistVideos = getActiveVideos(playlistVideos);
-  res.status(200).json({ success: true, playlist: playlistVideos });
+  return res.status(200).json({ success: true, playlist: playlistVideos });
 };
 
 const removePlaylist = async (req, res) => {
@@ -155,7 +155,7 @@ const removePlaylist = async (req, res) => {
   playlist.playlists[0].active = true; // Watch later is always true
   let updatedPlaylist = await playlist.save();
   updatedPlaylist = await getActivePlaylistItems(updatedPlaylist);
-  res.status(200).json({ success: true, playlist: updatedPlaylist });
+  return res.status(200).json({ success: true, playlist: updatedPlaylist });
 };
 
 module.exports = {
