@@ -15,7 +15,6 @@ const findUserPlaylist = async (req, res, next, userId) => {
         success: false,
         message: "Invalid user! Kindly register to continue",
       });
-      throw Error("Invalid User");
     }
     let playlist = await Playlist.findOne({ userId });
 
@@ -117,22 +116,22 @@ const getPlaylistVideos =  async (req, res) => {
 const updatePlaylistVideo = async (req, res) => {
   let {playlist} = req; 
   const {playlistId} = req.params;
-  const {_id}  = req.body;
+  const {videoId}  = req.body;
   let playlistVideos = getVideosInPlaylist(playlist, playlistId);
   playlistVideos = playlistVideos.map(item => item._id);
-  const videoExists = playlistVideos.some(item => item == _id);
+  const videoExists = playlistVideos.some(item => item == videoId);
     for(let list of playlist.playlists){
       if(list._id == playlistId){
         if(videoExists){
           for(let video of list.videos){
-            if(video._id == _id){
+            if(video._id == videoId){
               video.active = !video.active;
               break;
             }
           }
         }
         else{
-          list.videos.push({_id, active: true});
+          list.videos.push({videoId, active: true});
           break;
         }
       }

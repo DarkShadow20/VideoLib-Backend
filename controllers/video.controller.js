@@ -32,7 +32,6 @@ const findVideo=async(req,res,next,vid)=>{
 
 const getVideoById=async(req,res)=>{
   const {video}=req;
-  video.__v=undefined;
   res.status(200).json({success:true,video})
 }
 

@@ -4,7 +4,7 @@ const Secret = process.env['secret_key']
 
 async function connectDB() {
   try {
-    await mongoose.connect(`mongodb+srv://Kunal:${Secret}@neog-cluster.epsoe.mongodb.net/videolibrary?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+    await mongoose.connect(`${Secret}`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     console.log("connected to db successfully")
   }
   catch (e) {
