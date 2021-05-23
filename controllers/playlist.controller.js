@@ -4,7 +4,7 @@ const { concat } = require("lodash");
 
 const getPlaylists = async (req, res) => {
   const playlist = await Playlist.find({});
-  res.json({ success: true, playlist });
+  res.status(200).json({ success: true, playlist });
 };
 
 const findUserPlaylist = async (req, res, next, userId) => {
@@ -29,6 +29,7 @@ const findUserPlaylist = async (req, res, next, userId) => {
     req.playlist = playlist;
     next();
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       success: false,
       message: "Unable to retrive user's playlists",
@@ -53,8 +54,9 @@ const getUserPlaylist = async (req, res) => {
   try {
     let { playlist } = req;
     const playlistItems = await getActivePlaylistItems(playlist);
-    res.json({ success: true, playlist: playlistItems });
+    res.status(200).json({ success: true, playlist: playlistItems });
   } catch (err) {
+    console.log(err)
     res.status(500).json({
       success: false,
       message: "Unable to retrive the playlist",
@@ -88,7 +90,7 @@ const updatePlaylistName = async (req, res) => {
   }
   let updatedPlaylist = await playlist.save();
   updatedPlaylist = await getActivePlaylistItems(updatedPlaylist);
-  res.json({ success: true, playlist: updatedPlaylist });
+  res.status(200).json({ success: true, playlist: updatedPlaylist });
 };
 
 const getVideosInPlaylist =  (playlist, listId) => {
@@ -109,7 +111,7 @@ const getPlaylistVideos =  async (req, res) => {
   const {playlist} = req;
   let playlistVideos = getVideosInPlaylist(playlist, playlistId);
  playlistVideos = getActiveVideos(playlistVideos);
-  res.json({ success: true , playlist: playlistVideos});
+  res.status(200).json({ success: true , playlist: playlistVideos});
 };
 
 const updatePlaylistVideo = async (req, res) => {
@@ -138,7 +140,7 @@ const updatePlaylistVideo = async (req, res) => {
   let updatedPlaylist = await playlist.save();
   playlistVideos = getVideosInPlaylist(updatedPlaylist, playlistId);
   playlistVideos = getActiveVideos(playlistVideos);
-  res.json({ success: true, playlist: playlistVideos });
+  res.status(200).json({ success: true, playlist: playlistVideos });
 };
 
 const removePlaylist = async (req, res) => {
@@ -153,7 +155,7 @@ const removePlaylist = async (req, res) => {
   playlist.playlists[0].active = true; // Watch later is always true
   let updatedPlaylist = await playlist.save();
   updatedPlaylist = await getActivePlaylistItems(updatedPlaylist);
-  res.json({ success: true, playlist: updatedPlaylist });
+  res.status(200).json({ success: true, playlist: updatedPlaylist });
 };
 
 module.exports = {

@@ -3,7 +3,7 @@ const LikedVideo = require("../models/likedVideo-model");
 
 const getLikedVideos = async (req, res) => {
   const likedVideos = await LikedVideo.find({});
-  res.json({ success: true, likedVideos });
+  res.status(200).json({ success: true, likedVideos });
 };
 
 const findUserLikedVideo = async (req, res, next, userId) => {
@@ -27,6 +27,7 @@ const findUserLikedVideo = async (req, res, next, userId) => {
     req.likedVideo = likedVideo;
     next();
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       success: false,
       message: "Unable to retrive user's liked videos",
@@ -45,8 +46,9 @@ const getUserLikedVideo = async (req, res) => {
   try {
     let { likedVideo } = req;
     let likedVideoItems = await getLikedVideoItems(likedVideo);
-    res.json({ success: true, likedVideoItems });
+    res.status(200).json({ success: true, likedVideoItems });
   } catch (err) {
+    console.log(err)
     res.status(500).json({
       success: false,
       message: "Unable to retrive the likedVideo",

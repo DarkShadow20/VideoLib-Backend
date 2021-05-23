@@ -3,7 +3,7 @@ const {Schema}=mongoose;
 const videoList=require("./video-data");
 
 const videoSchema=new Schema({
-  vid:{
+  videoId:{
     type:String,
     required:"Video Id is a required attribute",
     unique:true

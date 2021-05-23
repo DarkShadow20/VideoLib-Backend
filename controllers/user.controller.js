@@ -1,23 +1,5 @@
 const User=require("../models/user-model");
 
-const getUsers=async(req,res)=>{
-  try{
-    let users=await User.find({})
-    users=users.map((user)=>{
-      user.password=undefined;
-      return user;
-    })
-    res.json({success:true , users})
-  }catch(err){
-    console.log(err.message)
-    res.status(500).json({
-      success:false,
-      message:"Unable to get Users list",
-      errMessage:err.message
-    })
-  }
-}
-
 const findUser=async(req,res)=>{
   const {email,password}=req.body;
   const userExists=await User.exists({email})
@@ -64,7 +46,6 @@ const addUser=async(req,res)=>{
 };
 
 module.exports={
-  getUsers,
   findUser,
   addUser
 };

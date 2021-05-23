@@ -3,7 +3,7 @@ const {Video}=require("../models/video-model");
 const getVideos=async(req,res)=>{
   try{
     const videos = await Video.find({});
-    res.json({success:true,videos})
+    res.status(200).json({success:true,videos})
   }catch(err){
     res.status(500).json({
       success:false,
@@ -22,6 +22,7 @@ const findVideo=async(req,res,next,vid)=>{
     req.video=video
     next();
   }catch(err){
+    console.log(err)
     res.status(400).json({
       success:false,
       message:"Unable to retrieve the video"
@@ -32,7 +33,7 @@ const findVideo=async(req,res,next,vid)=>{
 const getVideoById=async(req,res)=>{
   const {video}=req;
   video.__v=undefined;
-  res.json({success:true,video})
+  res.status(200).json({success:true,video})
 }
 
 module.exports={getVideos,findVideo,getVideoById};

@@ -4,7 +4,7 @@ const { concat,remove }=require("lodash");
 
 const getHistory=async(req,res)=>{
   const history=await History.find({});
-  res.json({success:true,history});
+  res.status(200).json({success:true,history});
 }
 
 const findUserHistory = async (req, res, next, userId) => {
@@ -26,6 +26,7 @@ const findUserHistory = async (req, res, next, userId) => {
     req.history = history;
     next();
   } catch (error) {
+    console.log(err)
     res.status(500).json({
       success: false,
       message: "Unable to retrive user's watch history",
@@ -46,6 +47,7 @@ const getUserHistory = async (req, res) => {
     let historyItems = await getHistoryItems(history);
     res.json({ success: true, historyItems });
   } catch (err) {
+    console.log(err)
     res.status(500).json({
       success: false,
       message: "Unable to retrive the history",
